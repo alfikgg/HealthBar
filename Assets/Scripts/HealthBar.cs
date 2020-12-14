@@ -7,25 +7,28 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider _healthBar;
 
+    private float _currentValue;
+
     private void Start()
     {
         _healthBar.maxValue = 100;
-        _healthBar.value = _healthBar.maxValue -50;
+        _currentValue = _healthBar.maxValue / 2;
+        _healthBar.value = _currentValue;
     }
 
-    public void TakeDamage(int damage)
+    public void ChangeValue(int value)
     {
-        if (_healthBar.value > 0)
-            _healthBar.value -= damage;
+        if (_currentValue >= 0 & _currentValue <= _healthBar.maxValue)
+            _currentValue -= value;
+        else if (_currentValue > _healthBar.maxValue)
+            _currentValue = _healthBar.maxValue;
+        else if (_currentValue < 0)
+            _currentValue = 0;        
     }
 
-    public void GetHeal(int heal)
+    public void FixedUpdate()
     {
-        if(_healthBar.value < _healthBar.maxValue)
-        {
-            _healthBar.value += heal;
-            if (_healthBar.value > _healthBar.maxValue)
-                _healthBar.value = _healthBar.maxValue;
-        }
+        _healthBar.value = Mathf.Lerp(_healthBar.value, _currentValue, Time.deltaTime * 2);
     }
+
 }
