@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider _healthBar;
+    [SerializeField] private float _fillingSpeed;
 
     private float _currentValue;
 
@@ -14,6 +15,7 @@ public class HealthBar : MonoBehaviour
         _healthBar.maxValue = 100;
         _currentValue = _healthBar.maxValue / 2;
         _healthBar.value = _currentValue;
+        _fillingSpeed = 2;
     }
 
     public void ChangeValue(int value)
@@ -28,7 +30,7 @@ public class HealthBar : MonoBehaviour
 
     public void FixedUpdate()
     {
-        _healthBar.value = Mathf.Lerp(_healthBar.value, _currentValue, Time.deltaTime * 2);
+        _healthBar.value = Mathf.Lerp(_healthBar.value, _currentValue, Time.deltaTime * _fillingSpeed);
     }
 
 }
