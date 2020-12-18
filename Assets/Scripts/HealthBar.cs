@@ -16,10 +16,9 @@ public class HealthBar : MonoBehaviour
         _healthBar.value = _player.CurrentHealth;
     }
 
-    public void FixedUpdate()
+    private void FixedUpdate()
     {
         _healthBar.value = Mathf.Lerp(_healthBar.value, _player.CurrentHealth, Time.deltaTime * _fillingSpeed);
-        _healthBar.value = _player.CurrentHealth;
     }
 
 }

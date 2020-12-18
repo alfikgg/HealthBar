@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+
 
 public class Player : MonoBehaviour
 {
@@ -10,10 +8,10 @@ public class Player : MonoBehaviour
     public float MaxHealth { get; private set; }
     public float CurrentHealth { get; private set; }
 
-    void Start()
+    private void Awake()
     {
         MaxHealth = _maxHealth;
-        CurrentHealth = _maxHealth;
+        CurrentHealth = MaxHealth / 2;
     }
 
     public void ChangeHealthPoint(float value)
