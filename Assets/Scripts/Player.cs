@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 
     public float MaxHealth { get; private set; }
     public float CurrentHealth { get; private set; }
+    public float PreviousHealthPoint { get; private set; }
 
     private void Awake()
     {
@@ -16,6 +17,8 @@ public class Player : MonoBehaviour
 
     public void ChangeHealthPoint(float value)
     {
+        PreviousHealthPoint = CurrentHealth;
+
         if (CurrentHealth >= 0 & CurrentHealth <= MaxHealth)
             CurrentHealth -= value;
         else if (CurrentHealth > MaxHealth)
