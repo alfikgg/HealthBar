@@ -8,8 +8,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Slider _healthBar;
     [SerializeField] private Player _player;
     [SerializeField] private float _fillingSpeed;
-    [SerializeField] private float _maxFillingSpeed;
-    [SerializeField] private float _tmpValue = 0;
+
 
     private void Start()
     {
@@ -17,11 +16,15 @@ public class HealthBar : MonoBehaviour
         _healthBar.value = _player.CurrentHealth;
     }
 
-    private void Update()
+    public void FixedUpdate()
     {
-        
-        //_healthBar.value = Mathf.Lerp(_player.PreviousHealthPoint, _player.CurrentHealth, _fillingSpeed);
-        _healthBar.value = Mathf.SmoothDamp(_player.PreviousHealthPoint, _player.CurrentHealth, ref _tmpValue, _fillingSpeed);
+        float tempValue = _player.CurrentHealth - _healthBar.value;
+
+        if (Mathf.Abs(tempValue) < 0.09)
+            _healthBar.value = _player.CurrentHealth;
+
+        _healthBar.value = Mathf.Lerp(_healthBar.value, _player.CurrentHealth, Time.deltaTime * _fillingSpeed);
+
     }
 
 }
