@@ -6,25 +6,33 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider _healthBar;
-    [SerializeField] private Player _player;
-    [SerializeField] private float _fillingSpeed;
+    [SerializeField] private int _fillingSpeed;
 
+    private float _targetHealth;
 
-    private void Start()
+    private void OnEnable()
     {
-        _healthBar.maxValue = _player.MaxHealth;
-        _healthBar.value = _player.CurrentHealth;
+        Player.OnHealthChanged += ChangeHealth;
     }
 
-    public void FixedUpdate()
+    private void OnDisable()
     {
-        float tempValue = _player.CurrentHealth - _healthBar.value;
+        Player.OnHealthChanged -= ChangeHealth;
+    }
+    private void Start()
+    {
+        _healthBar.maxValue = _targetHealth;
+    }
 
-        if (Mathf.Abs(tempValue) < 0.09)
-            _healthBar.value = _player.CurrentHealth;
+    private void FixedUpdate()
+    {
+        _healthBar.value = Mathf.Lerp(_healthBar.value, _targetHealth , Time.deltaTime * _fillingSpeed);
+    }
 
-        _healthBar.value = Mathf.Lerp(_healthBar.value, _player.CurrentHealth, Time.deltaTime * _fillingSpeed);
-
+    private void ChangeHealth(float value)
+    {
+        _healthBar.value = _targetHealth;
+        _targetHealth = value;
     }
 
 }

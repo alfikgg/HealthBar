@@ -5,24 +5,30 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _maxHealth;
+    public delegate void ChangeHealthValue(float value);
+    public static event ChangeHealthValue OnHealthChanged;
 
-    public float MaxHealth { get; private set; }
-    public float CurrentHealth { get; private set; }
+    [SerializeField] private float _maxHealth;
+    private float _currentHealth;
 
     void Awake()
     {
-        MaxHealth = _maxHealth;
-        CurrentHealth = _maxHealth;
+        _currentHealth = _maxHealth;
+        OnHealthChanged(_maxHealth);
     }
 
     public void ChangeHealthPoint(float value)
     {
-        if (CurrentHealth >= 0 & CurrentHealth <= MaxHealth)
-            CurrentHealth -= value;
-        else if (CurrentHealth > MaxHealth)
-            CurrentHealth = MaxHealth;
-        else if (CurrentHealth < 0)
-            CurrentHealth = 0;
+        if (_currentHealth >= 0 & _currentHealth <= _maxHealth)
+            _currentHealth -= value;
+        else if (_currentHealth > _maxHealth)
+            _currentHealth = _maxHealth;
+        else if (_currentHealth < 0)
+            _currentHealth = 0;
+
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(_currentHealth);
+        }
     }
 }

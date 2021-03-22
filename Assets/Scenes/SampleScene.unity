@@ -817,8 +817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 1829745229}
-  _player: {fileID: 2102294875}
-  _fillingSpeed: 3
+  _fillingSpeed: 2
 --- !u!1 &2020286077
 GameObject:
   m_ObjectHideFlags: 0
