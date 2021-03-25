@@ -40,8 +40,6 @@ public class HealthBar : MonoBehaviour
             _healthBar.value = Mathf.MoveTowards(_healthBar.value, _targetValue, _fillingSpeed);
 
             yield return null;
-        }
-
-        
+        }        
     }
 }
